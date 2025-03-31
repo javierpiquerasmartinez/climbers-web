@@ -34,10 +34,10 @@ export default function MainPage() {
           <a className="bg-(--color-accent) px-4 py-2 rounded-2xl text-white transition transform md:hover:-translate-y-1 duration-100 ease-in-out" href="/login">Únete ya</a>
         </div>
       </section>
-      <section className="flex flex-row justify-around items-center bg-(--color-accent) gap-10 px-10">
+      <section className="flex flex-col md:flex-row justify-around items-center bg-(--color-accent) md:gap-10 px-10">
         {
           items.map((item) => (
-            <div key={item.id} className="flex flex-col items-center py-10 text-center gap-4">
+            <div key={item.id} className="flex flex-col items-center py-6 md:py-10 text-center gap-4">
               <img className="size-20" src={item.icon} alt={`Un logo de ${item.title}`} />
               <h2 className="text-3xl font-bold text-white">{item.title}</h2>
               <p className="text-white text-lg">{item.description}</p>

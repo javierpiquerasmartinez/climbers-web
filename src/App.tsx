@@ -14,22 +14,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {!user && (
-          <Route element={<Layout />}>
+        <Route element={<Layout />}>
+          {!user && (
             <Route path="/" element={<Login />} />
-          </Route>
-        )}
-
-        {user && (
-          <Route element={<Layout />}>
-            <Route path="/" element={<ExplorarEscaladores />} />
-            <Route path="/perfil" element={<PerfilEditable />} />
-            <Route path="/explorar" element={<ExplorarEscaladores />} />
-            <Route path="/mensajes" element={<BandejaMensajes />} />
-            <Route path="/mensajes/:id" element={<Mensajes />} />
-            <Route path="/usuarios/:id" element={<PerfilPublico />} />
-          </Route>
-        )}
+          )}
+          {user && (
+            <>
+              <Route path="/" element={<ExplorarEscaladores />} />
+              <Route path="/perfil" element={<PerfilEditable />} />
+              <Route path="/explorar" element={<ExplorarEscaladores />} />
+              <Route path="/mensajes" element={<BandejaMensajes />} />
+              <Route path="/mensajes/:id" element={<Mensajes />} />
+              <Route path="/usuarios/:id" element={<PerfilPublico />} />
+            </>
+          )}
+        </Route>
 
         <Route path="*" element={<div className="p-10 text-center text-gray-500">Página no encontrada</div>} />
       </Routes>

@@ -5,16 +5,35 @@ export default function Navbar() {
   const { user, setUser } = useUser();
 
   return (
-    <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-      {user && (
-        <>
-          <span>Hola, {user.name}</span> |&nbsp;
-          <Link to="/perfil">Mi perfil</Link> |&nbsp;
-          <Link to="/explorar">Explorar</Link> |&nbsp;
-          <Link to="/mensajes">Mensajes</Link> |&nbsp;
-          <button onClick={() => setUser(null)}>Cerrar sesión</button>
-        </>
-      )}
+    <nav className="flex flex-row justify-between items-center px-20 py-2">
+      <div>
+        <img src="/public/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
+      </div>
+      <div className='flex flex-row gap-4'>
+        {
+          !user && (
+            <>
+              <Link to="/">Inicio</Link>
+              <Link to="/">Como funciona</Link>
+              <Link to="/">El proyecto</Link>
+              <Link to="/">Blog</Link>
+              <Link to="/">Contacto</Link>
+              -
+              <Link to="/">Iniciar sesión</Link>
+              <Link to="/">Registrarse</Link>
+            </>
+          )
+        }
+        {user && (
+          <>
+            <span>Hola, {user.name}</span>
+            <Link to="/perfil">Mi perfil</Link>
+            <Link to="/explorar">Explorar</Link>
+            <Link to="/mensajes">Mensajes</Link>
+            <button onClick={() => setUser(null)}>Cerrar sesión</button>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

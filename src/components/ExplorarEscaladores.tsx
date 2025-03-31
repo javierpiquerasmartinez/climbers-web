@@ -45,29 +45,31 @@ export default function ExplorarEscaladores() {
   }, [filters]);
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Explorar escaladores</h2>
+    <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
+      <h2 className="text-2xl font-semibold text-gray-800 text-center">Explorar escaladores</h2>
 
       {/* Filtros */}
-      <div style={{ marginBottom: '2rem' }}>
-        <label>
-          Rol:
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label className="text-sm font-medium text-gray-700">Rol</label>
           <select
             value={filters.role}
             onChange={(e) => setFilters({ ...filters, role: e.target.value })}
+            className="w-full border rounded-md px-3 py-2"
           >
             <option value="">Todos</option>
             <option value="viajero">Viajero</option>
             <option value="anfitrión">Anfitrión</option>
             <option value="ambos">Ambos</option>
           </select>
-        </label>
+        </div>
 
-        <label style={{ marginLeft: '1rem' }}>
-          Estilo:
+        <div>
+          <label className="text-sm font-medium text-gray-700">Estilo</label>
           <select
             value={filters.style}
             onChange={(e) => setFilters({ ...filters, style: e.target.value })}
+            className="w-full border rounded-md px-3 py-2"
           >
             <option value="">Cualquiera</option>
             <option value="boulder">Boulder</option>
@@ -75,46 +77,57 @@ export default function ExplorarEscaladores() {
             <option value="trad">Trad</option>
             <option value="mixta">Mixta</option>
           </select>
-        </label>
+        </div>
 
-        <label style={{ marginLeft: '1rem' }}>
-          Localización:
+        <div>
+          <label className="text-sm font-medium text-gray-700">Localización</label>
           <input
             type="text"
             value={filters.location}
             onChange={(e) => setFilters({ ...filters, location: e.target.value })}
+            className="w-full border rounded-md px-3 py-2"
             placeholder="Ej: Valencia"
           />
-        </label>
+        </div>
 
-        <label style={{ marginLeft: '1rem' }}>
-          Nivel:
+        <div>
+          <label className="text-sm font-medium text-gray-700">Nivel</label>
           <input
             type="text"
             value={filters.level}
             onChange={(e) => setFilters({ ...filters, level: e.target.value })}
-            placeholder="intermedio, avanzado..."
+            className="w-full border rounded-md px-3 py-2"
+            placeholder="Intermedio, Avanzado..."
           />
-        </label>
+        </div>
       </div>
 
       {/* Resultados */}
-      <ul>
-        {users.length === 0 && <p>No se encontraron escaladores</p>}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {users.length === 0 && <p>No se encontraron escaladores.</p>}
+
         {users.map(user => (
-          <li key={user.id} style={{ marginBottom: '1rem' }}>
-            <Link to={`/usuarios/${user.id}`}>
-              <strong>{user.name}</strong>
-            </Link>
-            ({user.role})<br />
-            {user.avatarUrl && (
-              <img src={user.avatarUrl} alt="avatar" width={40} style={{ borderRadius: '50%' }} />
-            )}
-            <p>📍 {user.location} | Nivel: {user.level}</p>
-            <p>🧗 Estilos: {user.climbingStyles.join(', ')}</p>
-          </li>
+          <Link to={`/usuarios/${user.id}`} key={user.id}>
+            <div className="p-4 border rounded-lg shadow-sm hover:shadow-md transition hover:-translate-y-1 bg-white flex flex-col gap-2">
+              <div className="flex items-center gap-4">
+                {user.avatarUrl && (
+                  <img src={user.avatarUrl} alt="avatar" className="w-12 h-12 rounded-full object-cover" />
+                )}
+                <div>
+                  <p className="font-semibold text-gray-800">{user.name}</p>
+                  <p className="text-sm text-gray-500">{user.location}</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600">🎯 Nivel: <span className="font-medium">{user.level || 'N/A'}</span></p>
+              <p className="text-sm text-gray-600">🧗 Estilos: {user.climbingStyles.join(', ')}</p>
+              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full w-fit">
+                {user.role}
+              </span>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
+
 }

@@ -6,7 +6,7 @@ export default function Navbar() {
 
   return (
     <nav className="flex flex-row justify-center md:justify-between items-center px-20 py-2">
-      <a href=''>
+      <a href="/">
         <img src="/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
       </a>
       <div className='md:flex flex-row gap-4 hidden'>
@@ -26,10 +26,14 @@ export default function Navbar() {
         }
         {user && (
           <>
-            <span>Hola, {user.name}</span>
             <Link to="/perfil">Mi perfil</Link>
             <Link to="/explorar">Explorar</Link>
             <Link to="/mensajes">Mensajes</Link>
+            <span> - </span>
+            <span className='flex items-center gap-2'>
+              <img className="w-5 h-5 rounded-full object-cover" src={user.avatarUrl} alt="Logo del usuario logueado" />
+              {user.name}
+            </span>
             <button onClick={() => setUser(null)}>Cerrar sesión</button>
           </>
         )}

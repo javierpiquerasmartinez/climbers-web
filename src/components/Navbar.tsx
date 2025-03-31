@@ -6,9 +6,9 @@ export default function Navbar() {
 
   return (
     <nav className="flex flex-row justify-between items-center px-20 py-2">
-      <div>
+      <a href=''>
         <img src="/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
-      </div>
+      </a>
       <div className='flex flex-row gap-4'>
         {
           !user && (

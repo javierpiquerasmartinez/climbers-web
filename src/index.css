@@ -6,6 +6,8 @@
 
 @theme {
   --font-primary: "Poppins", system-ui, sans-serif;
+
+  --color-accent: #EE7606;
 }
 
 @media (prefers-color-scheme: light) {

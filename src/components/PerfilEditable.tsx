@@ -121,7 +121,7 @@ export default function PerfilEditable() {
           </div>
 
 
-          <div>
+          <div className="overflow-hidden">
             <p className="font-semibold text-gray-800">{user.name}</p>
             <p className="text-sm text-gray-500">{user.email}</p>
           </div>

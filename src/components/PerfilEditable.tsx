@@ -7,12 +7,16 @@ const estilosDisponibles = ['boulder', 'deportiva', 'trad', 'mixta'];
 export default function PerfilEditable() {
   const { user, setUser } = useUser();
 
+  const [successMessage, setSuccessMessage] = useState('');
+
   const [form, setForm] = useState({
     role: user?.role ?? 'viajero',
     location: user?.location ?? '',
     climbingStyles: user?.climbingStyles ?? [],
     level: user?.level ?? ''
   });
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const toggleStyle = (style: string) => {
     setForm(prev => ({
@@ -40,6 +44,38 @@ export default function PerfilEditable() {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    const localUrl = URL.createObjectURL(file);
+    setPreviewUrl(localUrl);
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const token = localStorage.getItem('googleToken');
+
+    axiosInstance
+      .post(`/api/users/${user.id}/avatar`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        setForm(prev => ({ ...prev, avatarUrl: res.data.avatarUrl }));
+        setUser({ ...user, avatarUrl: res.data.avatarUrl });
+        // Notificación que añadimos luego 👇
+        setSuccessMessage('✅ Avatar actualizado correctamente');
+      })
+      .catch(err => {
+        console.error('Error al subir avatar', err);
+        alert('Error al subir avatar');
+      });
+  };
+
+
   return (
     <div className="max-w-xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
       {user && (
@@ -48,48 +84,51 @@ export default function PerfilEditable() {
             <img
               src={user.avatarUrl}
               alt="avatar"
-              className="w-14 h-14 rounded-full border shadow"
+              className="w-14 h-14 rounded-full object-cover border shadow"
             />
           )}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cambiar avatar:</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && user) {
-                  const formData = new FormData();
-                  formData.append('avatar', file);
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-gray-700">Cambiar avatar:</label>
 
-                  const token = localStorage.getItem('googleToken');
+            <div className="relative w-fit">
+              <input
+                id="avatarInput"
+                type="file"
+                accept="image/*"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                onChange={handleFileChange}
+              />
+              <label
+                htmlFor="avatarInput"
+                className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg 
+             transition transform hover:-translate-y-0.5 hover:shadow-md hover:bg-blue-700 cursor-pointer"
+              >
+                Seleccionar imagen
+              </label>
 
-                  axiosInstance
-                    .post(`/api/users/${user.id}/avatar`, formData, {
-                      headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${token}`
-                      }
-                    })
-                    .then(res => {
-                      setForm(prev => ({ ...prev, avatarUrl: res.data.avatarUrl }));
-                      setUser({ ...user, avatarUrl: res.data.avatarUrl });
-                    })
-                    .catch(err => {
-                      console.error('Error al subir avatar', err);
-                      alert('Error al subir avatar');
-                    });
-                }
-              }}
-              className="block w-full text-sm text-gray-600"
-            />
+            </div>
+
+            {previewUrl && (
+              <div className="mt-4">
+                <p className="text-sm text-gray-500 mb-1">Vista previa:</p>
+                <img
+                  src={previewUrl}
+                  alt="Vista previa del avatar"
+                  className="w-20 h-20 rounded-full object-cover border shadow"
+                />
+              </div>
+            )}
           </div>
+
 
           <div>
             <p className="font-semibold text-gray-800">{user.name}</p>
             <p className="text-sm text-gray-500">{user.email}</p>
           </div>
         </div>
+      )}
+      {successMessage && (
+        <div className="mt-2 text-green-600 text-sm font-medium">{successMessage}</div>
       )}
 
       <h2 className="text-2xl font-semibold text-center text-gray-800">Editar perfil</h2>

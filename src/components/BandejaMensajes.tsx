@@ -27,26 +27,49 @@ export default function BandejaMensajes() {
   }, [user]);
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Mensajes</h2>
+    <div className="p-6 max-w-3xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-6">Mensajes</h2>
 
-      {contactos.length === 0 && <p>Aún no has chateado con nadie.</p>}
+      {contactos.length === 0 && (
+        <p className="text-gray-500">Aún no has chateado con nadie.</p>
+      )}
 
-      <ul>
+      <ul className="space-y-4">
         {contactos.map((c) => (
-          <li key={c.id} style={{ marginBottom: '1rem' }}>
-            <Link to={`/mensajes/${c.id}`}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                {c.avatarUrl && (
-                  <img src={c.avatarUrl} alt="avatar" width={40} style={{ borderRadius: '50%' }} />
-                )}
-                <div>
-                  <strong>{c.name}</strong> ({c.role})<br />
-                  {c.location && <small>{c.location}</small>}
-                  <p style={{ fontStyle: 'italic', color: '#666', marginTop: '0.5rem' }}>
-                    {c.lastMessage ? `"${c.lastMessage}"` : 'Sin mensajes aún'}
-                  </p>
+          <li key={c.id}>
+            <Link
+              to={`/mensajes/${c.id}`}
+              className="flex items-center gap-4 p-4 rounded-xl border hover:bg-gray-100 transition"
+            >
+              {c.avatarUrl ? (
+                <img
+                  src={c.avatarUrl}
+                  alt="avatar"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">
+                  {c.name[0]}
                 </div>
+              )}
+
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-800">{c.name}</span>
+                  {c.lastDate && (
+                    <span className="text-sm text-gray-400 whitespace-nowrap">
+                      {new Date(c.lastDate).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
+                <div className="text-sm text-gray-600">
+                  <span className="italic">
+                    {c.lastMessage ? `"${c.lastMessage}"` : 'Sin mensajes aún'}
+                  </span>
+                </div>
+                {c.location && (
+                  <div className="text-xs text-gray-400 mt-1">{c.location}</div>
+                )}
               </div>
             </Link>
           </li>

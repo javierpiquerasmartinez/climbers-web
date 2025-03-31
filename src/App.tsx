@@ -15,7 +15,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         {!user && (
-          <Route path="/" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Login />} />
+          </Route>
         )}
 
         {user && (

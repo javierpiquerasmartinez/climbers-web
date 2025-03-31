@@ -5,7 +5,7 @@ export default function Layout() {
   const { user, setUser } = useUser();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       {/* Navbar */}
       <nav className="bg-white border-b border-gray-200 shadow-sm p-4 flex justify-between items-center">
         <Link to="/" className="text-xl font-bold text-blue-600">

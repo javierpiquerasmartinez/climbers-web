@@ -88,79 +88,133 @@ export default function PerfilPublico() {
   if (!user) return <p>Cargando perfil...</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{user.name}</h2>
+    <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      {/* Info básica */}
+      <div className="bg-white rounded-xl shadow-md p-6 text-center">
+        {user.avatarUrl && (
+          <img
+            src={user.avatarUrl}
+            alt="avatar"
+            className="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover"
+          />
+        )}
+        <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
+        <p className="text-gray-500">{user.role}</p>
 
-      {user.avatarUrl && (
-        <img src={user.avatarUrl} alt="avatar" width={100} style={{ borderRadius: '50%' }} />
-      )}
+        <div className="mt-4 text-sm text-gray-700 space-y-1">
+          {user.location && <p>📍 <span className="font-medium">{user.location}</span></p>}
+          {user.level && <p>🎯 Nivel: <span className="font-medium">{user.level}</span></p>}
+          {user.climbingStyles.length > 0 && (
+            <p>🧗 Estilos: {user.climbingStyles.join(', ')}</p>
+          )}
+          {user.averageRating !== undefined && (
+            <p>⭐ Valoración media: {user.averageRating?.toFixed(1)} ({user.totalReviews} valoraciones)</p>
+          )}
+        </div>
 
-      <p><strong>Rol:</strong> {user.role}</p>
-      <p><strong>Ubicación:</strong> {user.location}</p>
-      <p><strong>Nivel:</strong> {user.level}</p>
-      <p><strong>Estilos:</strong> {user.climbingStyles.join(', ')}</p>
-      <p><strong>⭐ Valoración media:</strong> {user.averageRating?.toFixed(1) ?? 'Sin valoraciones'} ({user.totalReviews} valoraciones)</p>
+        {currentUser?.id !== user.id && (
+          <Link to={`/mensajes/${user.id}`}>
+            <button className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5">
+              Enviar mensaje
+            </button>
+          </Link>
+        )}
+      </div>
 
-      <hr style={{ margin: '2rem 0' }} />
-      <h3>Valoraciones recibidas ({reviews.length})</h3>
+      {/* Reviews */}
+      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
+        <h3 className="text-xl font-semibold text-gray-800">Valoraciones</h3>
 
-      {reviews.length === 0 && <p>Este escalador aún no tiene valoraciones.</p>}
+        {reviews.length === 0 && <p className="text-gray-500">Este escalador aún no tiene valoraciones.</p>}
 
-      <ul>
-        {reviews.map(review => (
-          <li key={review.id} style={{ marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              {review.author.avatarUrl && (
-                <img src={review.author.avatarUrl} alt="avatar" width={40} style={{ borderRadius: '50%' }} />
-              )}
-              <strong>{review.author.name}</strong> – ⭐ {review.rating}/5
-            </div>
-            {review.comment && <p style={{ marginLeft: '3rem' }}>{review.comment}</p>}
-          </li>
-        ))}
-      </ul>
+        <ul className="space-y-4">
+          {reviews.map((review) => {
+            const esPropia = review.author.id === currentUser?.id;
 
-      {currentUser && currentUser.id !== user.id && !yaValorado && !reviewSent && (
-        <div style={{ marginTop: '2rem' }}>
-          <h4>¿Quieres dejar una valoración?</h4>
-          <label>
-            Puntuación:
+            return (
+              <li
+                key={review.id}
+                className={`border rounded-md p-4 ${esPropia
+                    ? 'bg-blue-50 border-blue-300 shadow-sm'
+                    : 'bg-gray-50'
+                  }`}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  {review.author.avatarUrl && (
+                    <img
+                      src={review.author.avatarUrl}
+                      alt="autor"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  )}
+                  <div className="text-sm">
+                    <p className="font-medium">{review.author.name}</p>
+                    <p className="text-gray-500 text-xs">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                      {esPropia && ' · Tu valoración'}
+                    </p>
+                  </div>
+                  <div className="ml-auto text-yellow-500 font-bold text-sm">
+                    ⭐ {review.rating}/5
+                  </div>
+                </div>
+                {review.comment && <p className="text-sm text-gray-700">{review.comment}</p>}
+              </li>
+            );
+          })}
+        </ul>
+
+      </div>
+      {currentUser && currentUser.id !== user.id && !yaValorado && (
+        <div className="bg-white rounded-xl shadow-sm p-6 space-y-4 border border-blue-100">
+          <h4 className="text-lg font-semibold text-gray-800">Dejar una valoración</h4>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Puntuación:</label>
             <select
               value={newReview.rating}
-              onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
+              onChange={(e) =>
+                setNewReview({ ...newReview, rating: parseInt(e.target.value) })
+              }
+              className="w-full border rounded-md px-3 py-2"
             >
-              {[5, 4, 3, 2, 1].map(n => (
-                <option key={n} value={n}>{n}</option>
+              {[5, 4, 3, 2, 1].map((n) => (
+                <option key={n} value={n}>
+                  {n} estrella{n > 1 ? 's' : ''}
+                </option>
               ))}
             </select>
-          </label>
+          </div>
 
-          <br /><br />
-
-          <label>
-            Comentario (opcional):
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Comentario (opcional):</label>
             <textarea
               value={newReview.comment}
               onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
               rows={3}
-              style={{ width: '100%' }}
+              className="w-full border rounded-md px-3 py-2"
+              placeholder="Comparte tu experiencia..."
             />
-          </label>
+          </div>
 
-          <br />
-          <button onClick={enviarReview}>Enviar valoración</button>
+          <div className="text-right">
+            <button
+              onClick={enviarReview}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5"
+            >
+              Enviar valoración
+            </button>
+          </div>
         </div>
       )}
 
-      {reviewSent && <p>✅ ¡Valoración enviada con éxito!</p>}
-
-      {currentUser && currentUser.id !== user.id && (
-        <Link to={`/mensajes/${user.id}`}>
-          <button>Enviar mensaje</button>
-        </Link>
+      {reviewSent && (
+        <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-md text-sm">
+          ✅ Valoración enviada con éxito.
+        </div>
       )}
 
     </div>
-
   );
+
 }

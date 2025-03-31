@@ -21,12 +21,14 @@ export type User = {
 type UserContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
+  loading: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUserState] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Recupera usuario desde localStorage + backend al iniciar
   useEffect(() => {
@@ -38,8 +40,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         .catch(() => {
           setUserState(null);
           localStorage.removeItem('googleToken');
+        }).finally(() => {
+          setLoading(false);
         });
+      return
     }
+    setLoading(false);
   }, []);
 
   const setUser = (user: User | null) => {
@@ -52,7 +58,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, loading }}>
       {children}
     </UserContext.Provider>
   );

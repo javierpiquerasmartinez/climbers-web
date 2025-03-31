@@ -4,10 +4,15 @@
   color-scheme: light dark;
 }
 
+@theme {
+  --font-primary: "Poppins", system-ui, sans-serif;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
+    font-family: var(--font-primary);
   }
 
   a:hover {
@@ -17,4 +22,34 @@
   button {
     background-color: #f9f9f9;
   }
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 300;
+  src: url("/fonts/Poppins-Light.woff2&display=swap") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  src: url("/fonts/Poppins-Regular.woff2&display=swap") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 500;
+  src: url("/fonts/Poppins-Medium.woff2&display=swap") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  src: url("/fonts/Poppins-SemiBold.woff2&display=swap") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 700;
+  src: url("/fonts/Poppins-Bold.woff2&display=swap") format("woff2");
 }

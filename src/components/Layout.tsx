@@ -9,7 +9,7 @@ export default function Layout() {
       <Navbar />
 
       {/* Contenido */}
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main>
         <Outlet />
       </main>
     </div>

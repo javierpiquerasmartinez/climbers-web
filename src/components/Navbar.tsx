@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className="flex flex-row justify-between items-center px-20 py-2">
       <div>
-        <img src="/public/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
+        <img src="/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
       </div>
       <div className='flex flex-row gap-4'>
         {
@@ -19,7 +19,7 @@ export default function Navbar() {
               <Link to="/">Blog</Link>
               <Link to="/">Contacto</Link>
               -
-              <Link to="/">Iniciar sesión</Link>
+              <Link to="/login">Iniciar sesión</Link>
               <Link to="/">Registrarse</Link>
             </>
           )

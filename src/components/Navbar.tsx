@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext.tsx';
+import NavItem from './NavItem.tsx';
 
 export default function Navbar() {
   const { user, setUser } = useUser();
@@ -13,22 +13,22 @@ export default function Navbar() {
         {
           !user && (
             <>
-              <Link to="/">Inicio</Link>
-              <Link to="/">Como funciona</Link>
-              <Link to="/">El proyecto</Link>
-              <Link to="/">Blog</Link>
-              <Link to="/">Contacto</Link>
+              <NavItem to="/">Inicio</NavItem>
+              <NavItem to="/">Como funciona</NavItem>
+              <NavItem to="/">El proyecto</NavItem>
+              <NavItem to="/">Blog</NavItem>
+              <NavItem to="/">Contacto</NavItem>
               -
-              <Link to="/login">Iniciar sesión</Link>
-              <Link to="/">Registrarse</Link>
+              <NavItem to="/login">Iniciar sesión</NavItem>
+              <NavItem to="/">Registrarse</NavItem>
             </>
           )
         }
         {user && (
           <>
-            <Link to="/perfil">Mi perfil</Link>
-            <Link to="/explorar">Explorar</Link>
-            <Link to="/mensajes">Mensajes</Link>
+            <NavItem to="/perfil">Mi perfil</NavItem>
+            <NavItem to="/explorar">Explorar</NavItem>
+            <NavItem to="/mensajes">Mensajes</NavItem>
             <span> - </span>
             <span className='flex items-center gap-2'>
               <img className="w-5 h-5 rounded-full object-cover" src={user.avatarUrl} alt="Logo del usuario logueado" />

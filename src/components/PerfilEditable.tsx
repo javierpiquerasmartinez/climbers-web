@@ -42,6 +42,22 @@ export default function PerfilEditable() {
 
   return (
     <div className="max-w-xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+      {user && (
+        <div className="flex items-center gap-4 mb-4">
+          {user.avatarUrl && (
+            <img
+              src={user.avatarUrl}
+              alt="avatar"
+              className="w-14 h-14 rounded-full border shadow"
+            />
+          )}
+          <div>
+            <p className="font-semibold text-gray-800">{user.name}</p>
+            <p className="text-sm text-gray-500">{user.email}</p>
+          </div>
+        </div>
+      )}
+
       <h2 className="text-2xl font-semibold text-center text-gray-800">Editar perfil</h2>
 
       {/* Rol */}

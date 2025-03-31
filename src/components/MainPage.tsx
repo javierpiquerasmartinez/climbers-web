@@ -23,7 +23,7 @@ export default function MainPage() {
 
   return (
     <>
-      <section className="flex flex-col h-[656px] bg-center bg-no-repeat bg-[url('/hero.webp')]">
+      <section className="flex flex-col h-[656px] w-full bg-center bg-cover bg-no-repeat bg-[url('/hero.webp')]">
         <div className="bg-black/30 h-full flex flex-col justify-around items-center p-40 text-center">
           <h1 className="text-7xl text-white font-bold">Conecta, viaja y escala</h1>
           <p className="uppercase text-white text-2xl font-semibold">

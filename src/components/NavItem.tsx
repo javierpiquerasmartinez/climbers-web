@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 
 type NavItemProps = {
   to: string;
-  children: React.ReactNode;
+  children: React.ReactNode,
+  onClick?: () => void;
 };
 
-export default function NavItem({ to, children }: NavItemProps) {
+export default function NavItem({ to, children, onClick }: NavItemProps) {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className="relative group text-gray-700 hover:text-(--color-accent) transition font-medium"
     >
       {children}

@@ -41,54 +41,75 @@ export default function PerfilEditable() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '500px' }}>
-      <h2>Editar perfil</h2>
+    <div className="max-w-xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+      <h2 className="text-2xl font-semibold text-center text-gray-800">Editar perfil</h2>
 
-      <label>Rol:</label>
-      <select
-        value={form.role}
-        onChange={(e) => setForm({ ...form, role: e.target.value as any })}
-      >
-        <option value="viajero">Viajero</option>
-        <option value="anfitrión">Anfitrión</option>
-        <option value="ambos">Ambos</option>
-      </select>
+      {/* Rol */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Rol:</label>
+        <select
+          value={form.role}
+          onChange={(e) => setForm({ ...form, role: e.target.value as any })}
+          className="w-full border rounded-md px-3 py-2"
+        >
+          <option value="viajero">Viajero</option>
+          <option value="anfitrión">Anfitrión</option>
+          <option value="ambos">Ambos</option>
+        </select>
+      </div>
 
-      <br /><br />
+      {/* Localización */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Localización:</label>
+        <input
+          type="text"
+          value={form.location}
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+          className="w-full border rounded-md px-3 py-2"
+        />
+      </div>
 
-      <label>Localización:</label>
-      <input
-        type="text"
-        value={form.location}
-        onChange={(e) => setForm({ ...form, location: e.target.value })}
-      />
+      {/* Estilos */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Estilos de escalada:</label>
+        <div className="flex flex-wrap gap-3">
+          {estilosDisponibles.map(style => (
+            <label
+              key={style}
+              className="flex items-center gap-2 text-sm text-gray-800"
+            >
+              <input
+                type="checkbox"
+                checked={form.climbingStyles.includes(style)}
+                onChange={() => toggleStyle(style)}
+                className="accent-blue-600"
+              />
+              {style}
+            </label>
+          ))}
+        </div>
+      </div>
 
-      <br /><br />
+      {/* Nivel */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Nivel:</label>
+        <input
+          type="text"
+          value={form.level}
+          onChange={(e) => setForm({ ...form, level: e.target.value })}
+          className="w-full border rounded-md px-3 py-2"
+        />
+      </div>
 
-      <label>Estilos:</label><br />
-      {estilosDisponibles.map(style => (
-        <label key={style} style={{ marginRight: '1rem' }}>
-          <input
-            type="checkbox"
-            checked={form.climbingStyles.includes(style)}
-            onChange={() => toggleStyle(style)}
-          />
-          {style}
-        </label>
-      ))}
-
-      <br /><br />
-
-      <label>Nivel:</label>
-      <input
-        type="text"
-        value={form.level}
-        onChange={(e) => setForm({ ...form, level: e.target.value })}
-      />
-
-      <br /><br />
-
-      <button onClick={handleSubmit}>Guardar cambios</button>
+      {/* Botón */}
+      <div className="text-center">
+        <button
+          onClick={handleSubmit}
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition transform hover:-translate-y-1"
+        >
+          Guardar cambios
+        </button>
+      </div>
     </div>
   );
 }

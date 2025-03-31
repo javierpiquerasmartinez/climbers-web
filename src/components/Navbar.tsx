@@ -5,11 +5,11 @@ export default function Navbar() {
   const { user, setUser } = useUser();
 
   return (
-    <nav className="flex flex-row justify-between items-center px-20 py-2">
+    <nav className="flex flex-row justify-center md:justify-between items-center px-20 py-2">
       <a href=''>
         <img src="/logo.png" alt="El logo de CragXchange" className="w-auto max-h-[64px]" />
       </a>
-      <div className='flex flex-row gap-4'>
+      <div className='md:flex flex-row gap-4 hidden'>
         {
           !user && (
             <>

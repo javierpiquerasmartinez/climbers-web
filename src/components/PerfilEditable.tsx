@@ -101,7 +101,7 @@ export default function PerfilEditable() {
               <label
                 htmlFor="avatarInput"
                 className="inline-block bg-(--color-accent) text-white text-sm font-medium px-4 py-2 rounded-lg 
-             transition transform hover:-translate-y-0.5 hover:shadow-md hover:bg-blue-700 cursor-pointer"
+             transition transform hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
               >
                 Seleccionar imagen
               </label>
@@ -194,7 +194,7 @@ export default function PerfilEditable() {
       <div className="text-center">
         <button
           onClick={handleSubmit}
-          className="bg-(--color-accent) text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition transform hover:-translate-y-1"
+          className="bg-(--color-accent) text-white px-5 py-2 rounded-lg transition transform hover:-translate-y-1"
         >
           Guardar cambios
         </button>

@@ -114,7 +114,7 @@ export default function PerfilPublico() {
 
         {currentUser?.id !== user.id && (
           <Link to={`/mensajes/${user.id}`}>
-            <button className="mt-6 bg-(--color-accent) text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5">
+            <button className="mt-6 bg-(--color-accent) text-white px-4 py-2 rounded-lg transition hover:-translate-y-0.5">
               Enviar mensaje
             </button>
           </Link>
@@ -200,7 +200,7 @@ export default function PerfilPublico() {
           <div className="text-right">
             <button
               onClick={enviarReview}
-              className="bg-(--color-accent) text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5"
+              className="bg-(--color-accent) text-white px-4 py-2 rounded-lg transition hover:-translate-y-0.5"
             >
               Enviar valoración
             </button>

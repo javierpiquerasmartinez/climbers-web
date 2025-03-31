@@ -52,6 +52,40 @@ export default function PerfilEditable() {
             />
           )}
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Cambiar avatar:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file && user) {
+                  const formData = new FormData();
+                  formData.append('avatar', file);
+
+                  const token = localStorage.getItem('googleToken');
+
+                  axiosInstance
+                    .post(`/api/users/${user.id}/avatar`, formData, {
+                      headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`
+                      }
+                    })
+                    .then(res => {
+                      setForm(prev => ({ ...prev, avatarUrl: res.data.avatarUrl }));
+                      setUser({ ...user, avatarUrl: res.data.avatarUrl });
+                    })
+                    .catch(err => {
+                      console.error('Error al subir avatar', err);
+                      alert('Error al subir avatar');
+                    });
+                }
+              }}
+              className="block w-full text-sm text-gray-600"
+            />
+          </div>
+
+          <div>
             <p className="font-semibold text-gray-800">{user.name}</p>
             <p className="text-sm text-gray-500">{user.email}</p>
           </div>

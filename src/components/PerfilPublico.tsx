@@ -114,7 +114,7 @@ export default function PerfilPublico() {
 
         {currentUser?.id !== user.id && (
           <Link to={`/mensajes/${user.id}`}>
-            <button className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5">
+            <button className="mt-6 bg-(--color-accent) text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5">
               Enviar mensaje
             </button>
           </Link>
@@ -135,8 +135,8 @@ export default function PerfilPublico() {
               <li
                 key={review.id}
                 className={`border rounded-md p-4 ${esPropia
-                    ? 'bg-blue-50 border-blue-300 shadow-sm'
-                    : 'bg-gray-50'
+                  ? 'bg-blue-50 border-blue-300 shadow-sm'
+                  : 'bg-gray-50'
                   }`}
               >
                 <div className="flex items-center gap-3 mb-2">
@@ -200,7 +200,7 @@ export default function PerfilPublico() {
           <div className="text-right">
             <button
               onClick={enviarReview}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5"
+              className="bg-(--color-accent) text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:-translate-y-0.5"
             >
               Enviar valoración
             </button>

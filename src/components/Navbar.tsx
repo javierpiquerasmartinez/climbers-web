@@ -32,8 +32,7 @@ export default function Navbar() {
               <NavItem to="/">Blog</NavItem>
               <NavItem to="/">Contacto</NavItem>
               -
-              <NavItem to="/login">Iniciar sesión</NavItem>
-              <NavItem to="/">Registrarse</NavItem>
+              <NavItem to="/login">Acceder</NavItem>
             </>
           )
         }
@@ -67,12 +66,11 @@ export default function Navbar() {
           {!user ? (
             <>
               <NavItem to="/" onClick={() => setOpen(false)}>Inicio</NavItem>
-              <NavItem to="/">Como funciona</NavItem>
-              <NavItem to="/">El proyecto</NavItem>
-              <NavItem to="/">Blog</NavItem>
-              <NavItem to="/">Contacto</NavItem>
-              <NavItem to="/login" onClick={() => setOpen(false)}>Iniciar sesión</NavItem>
-              <NavItem to="/">Registrarse</NavItem>
+              <NavItem to="/" onClick={() => setOpen(false)}>Como funciona</NavItem>
+              <NavItem to="/" onClick={() => setOpen(false)}>El proyecto</NavItem>
+              <NavItem to="/" onClick={() => setOpen(false)}>Blog</NavItem>
+              <NavItem to="/" onClick={() => setOpen(false)}>Contacto</NavItem>
+              <NavItem to="/login" onClick={() => setOpen(false)}>Acceder</NavItem>
             </>
           ) : (
             <>

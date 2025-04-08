@@ -110,9 +110,7 @@ export default function ExplorarEscaladores() {
           <Link to={`/usuarios/${user.id}`} key={user.id}>
             <div className="p-4 border rounded-lg shadow-sm hover:shadow-md transition hover:-translate-y-1 bg-white flex flex-col gap-2">
               <div className="flex items-center gap-4">
-                {user.avatarUrl && (
-                  <img src={user.avatarUrl} alt="avatar" className="w-12 h-12 rounded-full object-cover" />
-                )}
+                <img src={user.avatarUrl || 'logo.png'} alt="avatar" className="w-12 h-12 rounded-full object-cover" />
                 <div>
                   <p className="font-semibold text-gray-800">{user.name}</p>
                   <p className="text-sm text-gray-500">{user.location}</p>

@@ -1,0 +1,15 @@
+{
+  "name": "CragXChange",
+  "short_name": "CragXChange",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

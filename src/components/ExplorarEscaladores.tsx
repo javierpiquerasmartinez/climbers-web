@@ -5,6 +5,7 @@ import UserCard from './UserCard';
 
 export default function ExplorarEscaladores() {
 
+  const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [filters, setFilters] = useState({
@@ -102,6 +103,18 @@ export default function ExplorarEscaladores() {
             placeholder="Intermedio, Avanzado..."
           />
         </div>
+        <div className="flex items-center gap-2">
+          <input
+            id="favorites"
+            type="checkbox"
+            checked={showFavorites}
+            onChange={(e) => setShowFavorites(e.target.checked)}
+            className="accent-pink-600 w-4 h-4"
+          />
+          <label htmlFor="favorites" className="text-sm">
+            Solo favoritos
+          </label>
+        </div>
       </div>
 
       {/* Resultados */}
@@ -109,7 +122,7 @@ export default function ExplorarEscaladores() {
         {users.length === 0 && <p>No se encontraron escaladores.</p>}
 
         {users.map(user => (
-          <UserCard
+          (favorites.includes(user.id) || !showFavorites) && <UserCard
             key={'usercard-' + user.id}
             user={user}
             isFavorite={favorites.includes(user.id)}

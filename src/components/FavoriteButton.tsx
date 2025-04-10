@@ -6,6 +6,7 @@ export default function FavoriteButton({ isFavorite, handleFavoriteClick }: { is
 
   const toggleFavorite = (e: React.MouseEvent) => {
     handleFavoriteClick(e);
+    if (navigator.vibrate) navigator.vibrate(50)
     setAnimate(true);
     setTimeout(() => setAnimate(false), 200); // dura 200ms
   };

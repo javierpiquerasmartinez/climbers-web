@@ -17,11 +17,12 @@ export default function UserCard({ user, isFavorite, onToggleFavorite }: Props) 
       if (isFavorite) {
         await axiosInstance.delete(`/api/favorites/${user.id}`);
         onToggleFavorite(user.id, false);
-      } else {
-        await axiosInstance.post(`/api/favorites/${user.id}`);
-        onToggleFavorite(user.id, true);
+        return
       }
+      await axiosInstance.post(`/api/favorites/${user.id}`);
+      onToggleFavorite(user.id, true);
     } catch (error) {
+      debugger;
       console.error('Error al cambiar favorito:', error);
     }
   };

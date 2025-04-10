@@ -21,6 +21,26 @@ export default function MainPage() {
     }
   ]
 
+  const articlesList = [
+    {
+      title: 'Explora sin barreras',
+      content: 'Imagina viajar a los mejores sectores del mundo aconsejado, guiado y acompañado por un local. En CragXchange, encontrarás una comunidad de escaladores dispuestos a compartir su mundo contigo'
+    },
+    {
+      title: 'Conecta con la comunidad',
+      content: 'Desde rutas épicas hasta secretos locales, haz que cada viaje sea más auténtico de la mano de anfitriones que comparten tu misma pasión. Aquí no solo escalas paredes, ¡construyes amistades que duran toda la vida!'
+    },
+    {
+      title: 'Escala más, preocúpate menos',
+      content: 'Céntrate en lo que realmente importa: disfrutar del deporte que amas en el sector que siempre has querido visitar. Esta comunidad está para ayudarte a vivir el momento.'
+    },
+    {
+      title: 'Una red global sin fronteras',
+      content: 'España, Italia, Estados Unidos, ¡el mundo entero te espera! Descubre nuevos destinos y culturas mientras haces lo que más te gusta.'
+    }
+  ]
+
+
   return (
     <>
       <section className="relative flex flex-col min-h-[656px] w-auto bg-center bg-cover bg-no-repeat bg-[url('/hero.webp')]">
@@ -44,6 +64,20 @@ export default function MainPage() {
             </div>
           ))
         }
+      </section>
+      <section className="px-10 py-20 flex flex-col items-center gap-15">
+        <article className="flex flex-col items-center text-center gap-6 max-w-6xl">
+          <h2 className="text-3xl font-semibold">¿Listo para llevar tu pasión por la escalada más allá de tus límites?</h2>
+          {
+            articlesList.map((article) => (
+              <article className="flex flex-col items-center gap-2">
+                <h4 className="text-xl font-medium">{article.title}</h4>
+                <p>{article.content}</p>
+              </article>
+            ))
+          }
+        </article>
+        <button className="px-4 py-2 rounded-sm text-white bg-primary">Cómo funciona</button>
       </section>
     </>
   )

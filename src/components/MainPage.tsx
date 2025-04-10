@@ -23,18 +23,22 @@ export default function MainPage() {
 
   const articlesList = [
     {
+      icon: '🌍',
       title: 'Explora sin barreras',
       content: 'Imagina viajar a los mejores sectores del mundo aconsejado, guiado y acompañado por un local. En CragXchange, encontrarás una comunidad de escaladores dispuestos a compartir su mundo contigo'
     },
     {
+      icon: '🫱🏼‍🫲🏿',
       title: 'Conecta con la comunidad',
       content: 'Desde rutas épicas hasta secretos locales, haz que cada viaje sea más auténtico de la mano de anfitriones que comparten tu misma pasión. Aquí no solo escalas paredes, ¡construyes amistades que duran toda la vida!'
     },
     {
+      icon: '🧗🏼‍♀️',
       title: 'Escala más, preocúpate menos',
       content: 'Céntrate en lo que realmente importa: disfrutar del deporte que amas en el sector que siempre has querido visitar. Esta comunidad está para ayudarte a vivir el momento.'
     },
     {
+      icon: '🛰️',
       title: 'Una red global sin fronteras',
       content: 'España, Italia, Estados Unidos, ¡el mundo entero te espera! Descubre nuevos destinos y culturas mientras haces lo que más te gusta.'
     }
@@ -71,13 +75,37 @@ export default function MainPage() {
           {
             articlesList.map((article) => (
               <article className="flex flex-col items-center gap-2">
-                <h4 className="text-xl font-medium">{article.title}</h4>
+                <h4 className="text-xl font-medium">{article.icon} {article.title}</h4>
                 <p>{article.content}</p>
               </article>
             ))
           }
         </article>
-        <button className="px-4 py-2 rounded-sm text-white bg-primary">Cómo funciona</button>
+        <a className="px-4 py-2 rounded-sm text-white bg-primary">Cómo funciona</a>
+      </section>
+      <section className="flex flex-row justify-center gap-6 mt-5">
+        <aside>
+          <img className="w-md" src="/group.webp" alt="El grupo inicial posando tras una sesión de escalada" />
+        </aside>
+        <div className="flex flex-col md:gap-40">
+          <article className="flex flex-col gap-4 max-w-3xl">
+            <h2 className="text-3xl font-semibold">Conoce el proyecto: CragXchange</h2>
+            <p>En CragXchange, hemos creado una plataforma única diseñada para conectar a escaladores de todo el mundo, permitiendo que compartan no solo experiencias y conocimientos, sino también recursos esenciales para disfrutar de este apasionante deporte. Creemos en el poder de la comunidad para superar barreras y abrir nuevas oportunidades, fomentando el intercambio y el espíritu de colaboración que hacen de la escalada una actividad tan especial.</p>
+            <p>Nuestro objetivo es simplificar y enriquecer la experiencia de los escaladores al eliminar las preocupaciones y dudas que suelen surgir al planificar un viaje de escalada fuera de tu zona habitual, especialmente a nivel internacional.</p>
+          </article>
+          <div className="flex justify-center">
+            <a className="px-4 py-2 rounded-sm text-white bg-primary w-auto">Descubre más</a>
+          </div>
+        </div>
+      </section>
+      <section className="relative flex flex-col min-h-[400px] w-auto bg-center bg-cover bg-no-repeat bg-[url('/hero.webp')] mt-10">
+        <div className="absolute bg-[#505050]/88 h-full w-full flex flex-row px-10 items-center justify-center gap-14">
+          <article className="flex flex-col text-white max-w-md gap-8">
+            <h2 className="text-3xl font-semibold text-center">Tu próxima gran aventura empieza hoy.</h2>
+            <p className="text-center">Únete ahora y sé parte de la comunidad global que está redefiniendo cómo viajamos, escalamos y compartimos.</p>
+          </article>
+          <a className="py-4 px-8 rounded-sm text-accent font-semibold bg-white h-auto w-md text-center">Únete a la comunidad global de escaladores</a>
+        </div>
       </section>
     </>
   )

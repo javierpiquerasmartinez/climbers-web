@@ -1,18 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axiosInstance from '../lib/axios';
-
-type User = {
-  id: string;
-  name: string;
-  avatarUrl?: string;
-  role: string;
-  location?: string;
-  climbingStyles: string[];
-  level?: string;
-};
+import { User } from '../context/UserContext';
+import UserCard from './UserCard';
 
 export default function ExplorarEscaladores() {
+
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [filters, setFilters] = useState({
     role: '',
@@ -20,6 +13,15 @@ export default function ExplorarEscaladores() {
     location: '',
     level: ''
   });
+
+  const handleFavoriteClick = async (id: string, add: boolean) => {
+    {
+      const updated = add
+        ? [...favorites, id]
+        : favorites.filter(favId => favId !== id);
+      setFavorites(updated);
+    }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -29,20 +31,20 @@ export default function ExplorarEscaladores() {
         if (value) params.append(key, value);
       });
 
-      const token = localStorage.getItem('googleToken');
-
-      if (!token) return;
-
-      const res = await axiosInstance.get(`/api/users?${params.toString()}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const res = await axiosInstance.get(`/api/users?${params.toString()}`);
       setUsers(res.data);
     };
 
     fetchUsers();
   }, [filters]);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      const res = await axiosInstance.get('/api/favorites');
+      setFavorites(res.data.map((favorite: { id: string }) => favorite.id));
+    }
+    fetchFavorites();
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
@@ -107,22 +109,12 @@ export default function ExplorarEscaladores() {
         {users.length === 0 && <p>No se encontraron escaladores.</p>}
 
         {users.map(user => (
-          <Link to={`/usuarios/${user.id}`} key={user.id}>
-            <div className="p-4 border rounded-lg shadow-sm hover:shadow-md transition hover:-translate-y-1 bg-white flex flex-col gap-2">
-              <div className="flex items-center gap-4">
-                <img src={user.avatarUrl || 'logo.png'} alt="avatar" className="w-12 h-12 rounded-full object-cover" />
-                <div>
-                  <p className="font-semibold text-gray-800">{user.name}</p>
-                  <p className="text-sm text-gray-500">{user.location}</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600">🎯 Nivel: <span className="font-medium">{user.level || 'N/A'}</span></p>
-              <p className="text-sm text-gray-600">🧗 Estilos: {user.climbingStyles.join(', ')}</p>
-              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full w-fit">
-                {user.role}
-              </span>
-            </div>
-          </Link>
+          <UserCard
+            key={'usercard-' + user.id}
+            user={user}
+            isFavorite={favorites.includes(user.id)}
+            onToggleFavorite={handleFavoriteClick}
+          />
         ))}
       </div>
     </div>

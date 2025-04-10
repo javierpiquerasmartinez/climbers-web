@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { User } from "../context/UserContext";
 import axiosInstance from "../lib/axios";
-import { Heart } from 'lucide-react'
+import FavoriteButton from "./FavoriteButton";
 
 type Props = {
   user: User;
@@ -43,11 +43,7 @@ export default function UserCard({ user, isFavorite, onToggleFavorite }: Props) 
             {user.role}
           </span>
           {
-            <button onClick={handleFavoriteClick} className="text-red-500">
-              <Heart
-                className={`transition-all duration-200 ease-in-out transform hover:scale-110 ${isFavorite ? 'fill-pink-500 stroke-pink-500' : 'stroke-gray-400 hover:stroke-pink-500'}`}
-              />
-            </button>
+            <FavoriteButton isFavorite={isFavorite} handleFavoriteClick={handleFavoriteClick} />
           }
         </div>
       </div>

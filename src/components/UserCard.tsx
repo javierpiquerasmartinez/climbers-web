@@ -22,7 +22,6 @@ export default function UserCard({ user, isFavorite, onToggleFavorite }: Props) 
       await axiosInstance.post(`/api/favorites/${user.id}`);
       onToggleFavorite(user.id, true);
     } catch (error) {
-      debugger;
       console.error('Error al cambiar favorito:', error);
     }
   };

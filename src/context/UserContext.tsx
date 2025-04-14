@@ -14,8 +14,8 @@ export type User = {
   avatarUrl?: string;
   role: 'viajero' | 'anfitrión' | 'ambos';
   location?: string;
-  climbingStyles: string[];
-  level?: string;
+  climbingStyles: any[];
+  level?: any;
 };
 
 type UserContextType = {

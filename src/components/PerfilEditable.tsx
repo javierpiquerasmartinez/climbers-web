@@ -1,35 +1,32 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext.tsx';
 import axiosInstance from '../lib/axios.ts';
-
-const estilosDisponibles = ['boulder', 'deportiva', 'trad', 'mixta'];
+import { useParams } from './../hooks/useParams';
 
 export default function PerfilEditable() {
   const { user, setUser } = useUser();
+  const { data: params } = useParams();
 
   const [successMessage, setSuccessMessage] = useState('');
-
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [form, setForm] = useState({
     role: user?.role ?? 'viajero',
     location: user?.location ?? '',
-    climbingStyles: user?.climbingStyles ?? [],
-    level: user?.level ?? ''
+    climbingStyles: user?.climbingStyles?.map((s: any) => s.id) ?? [],
+    level: user?.level?.id ?? null,
   });
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  const toggleStyle = (style: string) => {
+  const toggleStyle = (style: any) => {
     setForm(prev => ({
       ...prev,
-      climbingStyles: prev.climbingStyles.includes(style)
-        ? prev.climbingStyles.filter(s => s !== style)
-        : [...prev.climbingStyles, style]
+      climbingStyles: prev.climbingStyles.includes(style.id)
+        ? prev.climbingStyles.filter(id => id !== style.id)
+        : [...prev.climbingStyles, style.id]
     }));
   };
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem('googleToken');
-    if (!token || !user) return;
+    if (!user) return;
 
     try {
       const response = await axiosInstance.patch(
@@ -162,18 +159,18 @@ export default function PerfilEditable() {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Estilos de escalada:</label>
         <div className="flex flex-wrap gap-3">
-          {estilosDisponibles.map(style => (
+          {params?.climbingStyles.map(style => (
             <label
-              key={style}
+              key={'style-' + style.id}
               className="flex items-center gap-2 text-sm text-gray-800"
             >
               <input
                 type="checkbox"
-                checked={form.climbingStyles.includes(style)}
+                checked={form.climbingStyles.includes(style.id)}
                 onChange={() => toggleStyle(style)}
                 className="accent-(--color-accent)"
               />
-              {style}
+              {style.name.replace('_', ' ').toLowerCase().replace(/^\w/, c => c.toUpperCase())}
             </label>
           ))}
         </div>
@@ -182,12 +179,17 @@ export default function PerfilEditable() {
       {/* Nivel */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Nivel:</label>
-        <input
-          type="text"
-          value={form.level}
-          onChange={(e) => setForm({ ...form, level: e.target.value })}
-          className="w-full border rounded-md px-3 py-2"
-        />
+        <select
+          value={form.level ?? ''}
+          onChange={(e) => setForm({ ...form, level: Number(e.target.value) })}
+          className="w-full border rounded-md px-3 py-2">
+          <option value="">Selecciona tu nivel</option>
+          {params?.climbingLevels.map(level => (
+            <option key={level.id} value={level.id}>
+              {level.name.charAt(0) + level.name.slice(1).toLowerCase().replace('_', ' ')}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Botón */}

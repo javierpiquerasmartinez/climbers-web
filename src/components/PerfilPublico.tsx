@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import axiosInstance from '../lib/axios';
+import { FaInstagram } from 'react-icons/fa';
+import ExpandableText from './ExpandableText';
 
 type UserPublico = {
   id: string;
@@ -13,6 +15,10 @@ type UserPublico = {
   level?: any;
   averageRating?: number;
   totalReviews?: number;
+  instagramUrl: string;
+  bio: string;
+  languages: any;
+  equipmentAvailable: any;
 };
 
 type Review = {
@@ -29,6 +35,7 @@ type Review = {
 
 
 export default function PerfilPublico() {
+
   const { id } = useParams();
   const [user, setUser] = useState<UserPublico | null>(null);
   const token = localStorage.getItem('googleToken');
@@ -98,11 +105,64 @@ export default function PerfilPublico() {
             className="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover"
           />
         )}
-        <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">
+          {user.name}
+        </h2>
         <p className="text-gray-500">{user.role}</p>
+        {user.bio && (
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Sobre mí</h3>
+            <ExpandableText text={user.bio} />
+          </div>
+        )}
+        {user.instagramUrl && (
+          <>
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">Redes Sociales</h3>
+              <a
+                href={user.instagramUrl.startsWith('http') ? user.instagramUrl : `https://${user.instagramUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline text-3xl flex justify-center"
+              >
+                <FaInstagram className="text-pink-600" />
+              </a>
+            </div>
+          </>
+        )}
 
         <div className="mt-4 text-sm text-gray-700 space-y-1">
-          {user.location && <p>📍 <span className="font-medium">{user.location}</span></p>}
+          {user.languages && user.languages.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">Idiomas</h3>
+              <ul className="flex flex-wrap gap-2 justify-center mt-2">
+                {user.languages.map((lang: any) => (
+                  <li
+                    key={'languages-' + lang.id}
+                    className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full shadow-sm"
+                  >
+                    {lang.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {user.equipmentAvailable && user.equipmentAvailable.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">Material disponible</h3>
+              <ul className="flex flex-wrap gap-2 justify-center mt-2">
+                {user.equipmentAvailable.map((item: any) => (
+                  <li
+                    key={item.id}
+                    className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full shadow-sm"
+                  >
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {user.location && <p className="mt-4">📍 <span className="font-medium">{user.location}</span></p>}
           {user.level && <p>🎯 Nivel: <span className="font-medium">{user.level.name.replace('_', ' ').toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())}</span></p>}
           {user.climbingStyles.length > 0 && (
             <p>🧗 Estilos: {user.climbingStyles.map((style: { name: string; }) => style.name.replace('_', ' ').toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).join(', ')}</p>

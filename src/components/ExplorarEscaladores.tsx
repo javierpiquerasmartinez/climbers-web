@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../lib/axios';
 import { User } from '../context/UserContext';
 import UserCard from './UserCard';
+import { useParams } from '../hooks/useParams';
 
 export default function ExplorarEscaladores() {
 
@@ -14,6 +15,8 @@ export default function ExplorarEscaladores() {
     location: '',
     level: ''
   });
+  const { data: params } = useParams();
+
 
   const handleFavoriteClick = async (id: string, add: boolean) => {
     {
@@ -75,10 +78,9 @@ export default function ExplorarEscaladores() {
             className="w-full border rounded-md px-3 py-2"
           >
             <option value="">Cualquiera</option>
-            <option value="boulder">Boulder</option>
-            <option value="deportiva">Deportiva</option>
-            <option value="trad">Trad</option>
-            <option value="mixta">Mixta</option>
+            {
+              params?.climbingStyles.map(style => (<option value={style.id}>{style.name.replace('_', ' ').toLowerCase().replace(/^\w/, c => c.toUpperCase())}</option>))
+            }
           </select>
         </div>
 
@@ -95,13 +97,16 @@ export default function ExplorarEscaladores() {
 
         <div>
           <label className="text-sm font-medium text-gray-700">Nivel</label>
-          <input
-            type="text"
+          <select
             value={filters.level}
             onChange={(e) => setFilters({ ...filters, level: e.target.value })}
             className="w-full border rounded-md px-3 py-2"
-            placeholder="Intermedio, Avanzado..."
-          />
+          >
+            <option value="">Cualquiera</option>
+            {
+              params?.climbingLevels.map(level => (<option value={level.id}>{level.name.replace('_', ' ').toLowerCase().replace(/^\w/, c => c.toUpperCase())}</option>))
+            }
+          </select>
         </div>
         <div className="flex items-center gap-2">
           <input

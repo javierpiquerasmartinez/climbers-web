@@ -141,7 +141,7 @@ export default function PerfilPublico() {
                     key={'languages-' + lang.id}
                     className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full shadow-sm"
                   >
-                    {lang.name}
+                    {lang.name} {lang.flag}
                   </li>
                 ))}
               </ul>

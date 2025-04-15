@@ -14,6 +14,7 @@ type ClimbingLevel = {
 type Language = {
   id: number;
   name: string;
+  flag: string;
 };
 
 type Equipment = {

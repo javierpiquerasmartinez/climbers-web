@@ -1,54 +1,51 @@
-# React + TypeScript + Vite
+# Funcionalidades para implementar en la plataforma de contactos entre escaladores
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Perfil de usuario avanzado
+- [ ] Editar perfil (bio, foto, idiomas, redes sociales, zona favorita, etc.)
+- [ ] Ver perfil público de otros usuarios
+- [ ] Ver reviews que ha escrito y que ha recibido
 
-Currently, two official plugins are available:
+## 2. Búsqueda de anfitriones/escaladores
+- [ ] Filtros por localización, nivel, modalidad, idioma, disponibilidad, etc.
+- [ ] Vista tipo lista y mapa
+- [ ] Resultados ordenables por proximidad, nivel, etc.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 3. Sistema de mensajes
+- [x] Mensajes básicos
+- [ ] Chats en tiempo real (usando sockets)
+- [ ] Indicadores de "escribiendo…" y "visto"
+- [ ] Notificaciones push o por email
 
-## Expanding the ESLint configuration
+## 4. Sistema de reseñas
+- [x] Crear reseñas a otros usuarios
+- [ ] Editar/eliminar reseñas propias
+- [ ] Ver historial de interacciones antes de permitir reseñar
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 5. Solicitudes de encuentro / alojamiento
+- [ ] Enviar solicitud para escalar juntos o quedarse en su casa
+- [ ] Aceptar/rechazar solicitud
+- [ ] Ver historial de solicitudes
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 6. Calendario de disponibilidad
+- [ ] Añadir días/horas disponibles
+- [ ] Ver disponibilidad de otros
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 7. Sistema de reputación / verificación
+- [ ] Badges de confianza (verificado por email, teléfono, redes)
+- [ ] Mostrar historial de encuentros
+- [ ] Estadísticas de participación
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 8. Sistema de reportes y moderación
+- [ ] Reportar usuarios o mensajes inapropiados
+- [ ] Panel para revisar y actuar sobre reportes (admin)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 9. Dashboard personal
+- [ ] Resumen de solicitudes, mensajes, reviews, etc.
+- [ ] Alertas (nuevos mensajes, solicitudes pendientes…)
+
+## 10. Internacionalización (i18n)
+- [ ] Multi-idioma (ES / EN como mínimo)
+
+## 11. Diseño responsive + modo oscuro
+- [ ] Optimización móvil total
+- [ ] Modo claro / oscuro con guardado de preferencia

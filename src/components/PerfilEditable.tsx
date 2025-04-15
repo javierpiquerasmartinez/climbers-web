@@ -43,7 +43,6 @@ export default function PerfilEditable() {
     } catch (err) {
       setModalContent(<p className="text-red-600">❌ Error al actualizar el perfil</p>)
       setModalOpen(true)
-      alert('Error al actualizar el perfil');
     }
   };
 

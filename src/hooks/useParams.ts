@@ -11,9 +11,21 @@ type ClimbingLevel = {
   name: string;
 };
 
+type Language = {
+  id: number;
+  name: string;
+};
+
+type Equipment = {
+  id: number;
+  name: string;
+};
+
 type ParamsResponse = {
   climbingStyles: ClimbingStyle[];
   climbingLevels: ClimbingLevel[];
+  languages: Language[];
+  equipment: Equipment[];
 };
 
 export function useParams() {

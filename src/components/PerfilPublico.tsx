@@ -9,8 +9,8 @@ type UserPublico = {
   avatarUrl?: string;
   role: string;
   location?: string;
-  climbingStyles: string[];
-  level?: string;
+  climbingStyles: any;
+  level?: any;
   averageRating?: number;
   totalReviews?: number;
 };
@@ -103,9 +103,9 @@ export default function PerfilPublico() {
 
         <div className="mt-4 text-sm text-gray-700 space-y-1">
           {user.location && <p>📍 <span className="font-medium">{user.location}</span></p>}
-          {user.level && <p>🎯 Nivel: <span className="font-medium">{user.level}</span></p>}
+          {user.level && <p>🎯 Nivel: <span className="font-medium">{user.level.name.replace('_', ' ').toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())}</span></p>}
           {user.climbingStyles.length > 0 && (
-            <p>🧗 Estilos: {user.climbingStyles.join(', ')}</p>
+            <p>🧗 Estilos: {user.climbingStyles.map((style: { name: string; }) => style.name.replace('_', ' ').toLowerCase().replace(/^\w/, (c: string) => c.toUpperCase())).join(', ')}</p>
           )}
           {user.averageRating !== undefined && (
             <p>⭐ Valoración media: {user.averageRating?.toFixed(1)} ({user.totalReviews} valoraciones)</p>

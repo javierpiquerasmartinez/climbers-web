@@ -16,6 +16,10 @@ export type User = {
   location?: string;
   climbingStyles: any[];
   level?: any;
+  instagramUrl?: string;
+  languages?: any;
+  equipmentAvailable?: any;
+  bio: string;
 };
 
 type UserContextType = {

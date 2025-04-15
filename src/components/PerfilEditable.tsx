@@ -18,6 +18,10 @@ export default function PerfilEditable() {
     location: user?.location ?? '',
     climbingStyles: user?.climbingStyles?.map((s: any) => s.id) ?? [],
     level: user?.level?.id ?? null,
+    instagramUrl: user?.instagramUrl ?? '',
+    languages: user?.languages?.map((l: { id: any; }) => l.id) ?? [],
+    equipmentAvailable: user?.equipmentAvailable?.map((e: { id: any; }) => e.id) ?? [],
+    bio: user?.bio ?? ''
   });
 
   const toggleStyle = (style: any) => {
@@ -26,6 +30,24 @@ export default function PerfilEditable() {
       climbingStyles: prev.climbingStyles.includes(style.id)
         ? prev.climbingStyles.filter(id => id !== style.id)
         : [...prev.climbingStyles, style.id]
+    }));
+  };
+
+  const toggleEquipment = (equipment: any) => {
+    setForm(prev => ({
+      ...prev,
+      equipmentAvailable: prev.equipmentAvailable.includes(equipment.id)
+        ? prev.equipmentAvailable.filter((id: any) => id !== equipment.id)
+        : [...prev.equipmentAvailable, equipment.id]
+    }));
+  };
+
+  const toggleLanguages = (languages: any) => {
+    setForm(prev => ({
+      ...prev,
+      languages: prev.languages.includes(languages.id)
+        ? prev.languages.filter((id: any) => id !== languages.id)
+        : [...prev.languages, languages.id]
     }));
   };
 
@@ -182,6 +204,27 @@ export default function PerfilEditable() {
           </div>
         </div>
 
+        {/* Equipamiento */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Equipamiento disponible para prestar:</label>
+          <div className="flex flex-wrap gap-3">
+            {params?.equipment.map(equipment => (
+              <label
+                key={'equipment-' + equipment.id}
+                className="flex items-center gap-2 text-sm text-gray-800"
+              >
+                <input
+                  type="checkbox"
+                  checked={form.equipmentAvailable.includes(equipment.id)}
+                  onChange={() => toggleEquipment(equipment)}
+                  className="accent-(--color-accent)"
+                />
+                {equipment.name.replace('_', ' ').toLowerCase().replace(/^\w/, c => c.toUpperCase())}
+              </label>
+            ))}
+          </div>
+        </div>
+
         {/* Nivel */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nivel:</label>
@@ -196,6 +239,48 @@ export default function PerfilEditable() {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Idiomas */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Idiomas que hablas:</label>
+          <div className="flex flex-wrap gap-3">
+            {params?.languages.map(language => (
+              <label
+                key={'language-' + language.id}
+                className="flex items-center gap-2 text-sm text-gray-800"
+              >
+                <input
+                  type="checkbox"
+                  checked={form.languages.includes(language.id)}
+                  onChange={() => toggleLanguages(language)}
+                  className="accent-(--color-accent)"
+                />
+                {language.flag} {language.name.replace('_', ' ').toLowerCase().replace(/^\w/, c => c.toUpperCase())}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Biografía:</label>
+          <textarea
+            value={form.bio}
+            onChange={(e) => setForm({ ...form, bio: e.target.value })}
+            placeholder="Cuéntanos un poco sobre ti, tu experiencia escalando, etc."
+            rows={4}
+            className="w-full border rounded-md px-3 py-2 resize-none"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Perfil de Instagram:</label>
+          <input
+            type="text"
+            value={form.instagramUrl}
+            onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
+            className="w-full border rounded-md px-3 py-2"
+          />
         </div>
 
         {/* Botón */}
